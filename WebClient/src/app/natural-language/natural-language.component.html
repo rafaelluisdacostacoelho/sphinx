@@ -1,0 +1,48 @@
+<md-progress-bar *ngIf="loading" mode="indeterminate"></md-progress-bar>
+
+<md-card>
+  <md-card-header>
+    <md-card-title>Powerful Text Analysis</md-card-title>
+  </md-card-header>
+
+  <md-card-content>
+    Google Cloud Natural Language API reveals the structure and meaning of text by offering powerful machine learning models
+    in an easy to use REST API. You can use it to extract information about people, places, events and much more, mentioned
+    in text documents, news articles or blog posts. You can use it to understand sentiment about your product on social media
+    or parse intent from customer conversations happening in a call center or a messaging app. You can analyze text uploaded
+    in your request or integrate with your document storage on Google Cloud Storage.
+
+  <!--
+  <p>
+    <md-select placeholder="Language" [(ngModel)]="selected" name="language">
+      <md-option *ngFor="let language of languages" [value]="language.value">
+        {{language.description}}
+      </md-option>
+    </md-select>
+  </p>
+  -->
+
+  </md-card-content>
+  <md-card-content>
+    <md-input-container fxFlex>
+      <input mdInput placeholder="Phrase" [(ngModel)]="text" />
+    </md-input-container>
+
+  </md-card-content>
+  <md-card-actions>
+    <span fxFlex></span>
+    <button md-raised-button color="primary" (click)="analyzeEverything()">Analyze Text</button>
+    <button md-raised-button color="primary" (click)="analyzeSentiment()">Analyze Sentiments</button>
+    <button md-raised-button color="primary" (click)="analyzeSyntax()">Analyze Syntax</button>
+    <button md-raised-button color="primary" (click)="analyzeEntities()">Analyze Entities</button>
+  </md-card-actions>
+</md-card>
+<br>
+<md-card>
+  <md-card-header>
+    <md-card-title>Result</md-card-title>
+  </md-card-header>
+  <md-card-content>
+    {{service.result | json}}
+  </md-card-content>
+</md-card>
