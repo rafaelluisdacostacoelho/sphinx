@@ -18,7 +18,7 @@ namespace Sphinx.WebApi
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
-
+            
             host.Run();
         }
     }

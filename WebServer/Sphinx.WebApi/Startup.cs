@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sphinx.CrossCutting;
 using Swashbuckle.AspNetCore.Swagger;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Sphinx.WebApi
 {
@@ -21,6 +23,12 @@ namespace Sphinx.WebApi
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
             Configuration = builder.Build();
         }
 
@@ -32,9 +40,9 @@ namespace Sphinx.WebApi
             // Add framework services.
             services.AddMvc();
 
-            services.AddCors(options => 
+            services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", builder => 
+                options.AddPolicy("AllowAll", builder =>
                     builder
                         .AllowAnyOrigin()
                         .AllowAnyMethod()
@@ -46,9 +54,11 @@ namespace Sphinx.WebApi
             {
                 options.SwaggerDoc("v1", new Info
                 {
-                    Title = "Nós Empreendedores API",
-                    Version = "v1"
+                    Version = "v1",
+                    Title = "Sphinx API"
                 });
+                options.DescribeAllEnumsAsStrings();
+                options.OperationFilter<FileUploadOperation>();
             });
 
             Injector.RegisterServices(services);
@@ -62,16 +72,20 @@ namespace Sphinx.WebApi
 
             app.UseMvc();
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
-
             app.UseCors(builder => builder.WithOrigins().AllowAnyHeader());
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Nós Empreendedores API v1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Sphinx API v1");
                 options.DocExpansion("none");
+            });
+
+            app.UseGoogleAuthentication(new GoogleOptions()
+            {
+                ClientId = Configuration["Authentication:Google:ClientID"],
+                ClientSecret = Configuration["Authentication:Google:ClientSecret"],
+                SignInScheme = "Sphinx"
             });
         }
     }

@@ -3,7 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sphinx.Domain\Sphinx.Domain.csproj" />
   </ItemGroup>
-
+  
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
@@ -13,4 +13,5 @@
     <PackageReference Include="Google.Cloud.Speech.V1" Version="1.0.0-beta08" />
     <PackageReference Include="Google.Cloud.Vision.V1" Version="1.0.0-beta03" />
   </ItemGroup>
+  
 </Project>

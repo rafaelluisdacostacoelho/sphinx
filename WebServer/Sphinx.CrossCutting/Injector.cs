@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sphinx.Application.Interfaces.Google.MachineLearning.NaturalLanguage;
+using Sphinx.Application.Interfaces.Google.MachineLearning.Vision;
 using Sphinx.Application.Services.Google.MachineLearning.NaturalLanguage;
 using Sphinx.Application.Services.Google.MachineLearning.SpeechRecognition;
 using Sphinx.Application.Services.Google.MachineLearning.VideoIntelligence;
@@ -22,12 +23,12 @@ namespace Sphinx.CrossCutting
             services.AddScoped<INaturalLanguageService, NaturalLanguageService>();
             //services.AddScoped<ISpeechRecognitionService, SpeechRecognitionService>();
             //services.AddScoped<IVideoIntelligenceService, VideoIntelligenceService>();
-            //services.AddScoped<IVisionService, VisionService>();
+            services.AddScoped<IVisionService, VisionService>();
 
             services.AddScoped<INaturalLanguageRepository, NaturalLanguageRepository>();
             //services.AddScoped<ISpeechRecognitionRepository, SpeechRecognitionRepository>();
             //services.AddScoped<IVideoIntelligenceRepository, VideoIntelligenceRepository>();
-            //services.AddScoped<IVisionRepository, VisionRepository>();
+            services.AddScoped<IVisionRepository, VisionRepository>();
         }
     }
 }

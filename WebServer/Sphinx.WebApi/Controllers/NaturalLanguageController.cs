@@ -6,7 +6,7 @@ using Sphinx.Application.Interfaces.Google.MachineLearning.NaturalLanguage;
 namespace Sphinx.WebApi.Controllers
 {
     [EnableCors("AllowAll")]
-    [Route("api/natural-language")]
+    [Route("api/v1/natural-language")]
     public class NaturalLanguageController : Controller
     {
         private readonly INaturalLanguageService service;
@@ -30,7 +30,7 @@ namespace Sphinx.WebApi.Controllers
             return Ok(await service.AnalyzeSentimentAsync(text));
         }
 
-        [Route("analyze-syntax")]
+        [Route("analyze-syntax/{text}")]
         [HttpGet]
         public async Task<IActionResult> AnalyzeSyntaxAsync(string text)
         {
